@@ -87,28 +87,26 @@ function altaUsuarios() {
   let parrafo = document.createElement("h1");
   parrafo.innerHTML = `Bienvenido ${domName}`;
   parrafo.style.color = "blue";
-  parrafo.style.fontSize = "60px";
+  parrafo.style.fontSize = "30px";
   mensaje.appendChild(parrafo);
 
   //CARGAR DEL USUARIO A LISTA
   console.log(user);
   allUser.push(user);
 
-  //
+  //Envio de usuario cargado a jsonplaceholder
   let url = "https://jsonplaceholder.typicode.com/posts";
-  let infoEnviada = signup;
-  let userpruea = {
-    name: "joa",
-    edad: "55",
-  };
+  let infoEnviada = user;
 
-  $.post(infoEnviada, function (info) {
-    console.log(info);
+  $.ajax({
+    method: "POST",
+    url: url,
+    data: infoEnviada,
+    success: function (respuesta) {
+      console.log(respuesta);
+    },
   });
-  $.post(userpruea, function (info) {
-    console.log(info);
-  });
-  //
+
   sessionStorage.setItem("Nombre", nameDom.value);
   sessionStorage.setItem("Email", emailDom.value);
   document.getElementById("name").value = "";

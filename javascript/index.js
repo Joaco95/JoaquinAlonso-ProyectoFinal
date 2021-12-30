@@ -104,25 +104,29 @@ $("#login").on("mouseleave", function () {
 //ANIMACIONES
 $("#login").on("click", function () {
   $("#login").css("color", "white").slideUp(0300).delay(0100).slideDown(0300);
+
+  //Se agrego nombre de ciudad y temperatura
+  let url = navigator.geolocation.getCurrentPosition(informa);
+  function informa(posicion) {
+    let lati = posicion.coords.latitude;
+    console.log(lati);
+    let long = posicion.coords.longitude;
+    console.log(long);
+    let clima = `http://api.openweathermap.org/data/2.5/weather?lat=${lati}&lon=${long}&appid=d3742193cd47d81bc403947b136a9ada`;
+    $("#login").click(function () {
+      $.get(clima, function (info) {
+        console.log(info);
+        console.log(info.name);
+        let city = info.name;
+        let temperatura = info.main.temp_max;
+        let agregarMensaje = `<h3>${city}</h3>
+        <h3>${temperatura}°F</h3> `;
+        $("#welcome").append(agregarMensaje);
+      });
+    });
+  }
 });
 
 $("#Borrar").on("click", function () {
   $("#Borrar").css("color", "white").slideUp(0500).delay(0100).slideDown(0500);
-  let userpruea = {
-    name: "joa",
-    edad: "55",
-  };
-
-  $.post(userpruea, function (info) {
-    console.log(info);
-  });
 });
-
-/* let url = "https://jsonplaceholder.typicode.com/posts";
-
-$("#Borrar").on("click", function () {
-  $.get(url, function (info) {
-    console.log(info);
-  });
-});
- */
