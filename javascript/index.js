@@ -24,6 +24,7 @@ function loginUser() {
         emailDom.value == userRegistrados.email &&
         passwordDom.value == userRegistrados.password
       ) {
+        noDato = "";
         tiempoDeEspera();
       } else {
         msjError(errorMensaje, noDato);
