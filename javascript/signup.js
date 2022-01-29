@@ -62,6 +62,7 @@ function altaUsuarios() {
   }
 
   //TEXTO DE CARGA DE USUARIO
+  document.getElementById("bienvenida").innerHTML = "";
   let mensaje = document.getElementById("bienvenida");
   let parrafo = document.createElement("h1");
   parrafo.innerHTML = `Bienvenido ${domName}`;
