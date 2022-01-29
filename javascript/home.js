@@ -40,7 +40,8 @@ document.getElementById("logo").addEventListener("click", function () {
 randomFact();
 
 //Cambio de imagenes aleatorias
-window.onload = choosePic;
+//Esto sirve para mostrar imagenes random pero por error get 404 no se puede mostrar
+/* window.onload = choosePic;
 
 let image = new Array(
   "../img/1.jpg",
@@ -52,7 +53,7 @@ let image = new Array(
 function choosePic() {
   let randomNum = Math.floor(Math.random() * image.length);
   document.getElementById("imageChuck").src = image[randomNum];
-}
+} */
 
 //Cambio de color de fondo
 $("#color").on("click", function () {
