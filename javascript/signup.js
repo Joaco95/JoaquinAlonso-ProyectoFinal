@@ -14,90 +14,75 @@ function altaUsuarios() {
   ////Dato capturado por input
   let domName = document.getElementById("name").value;
   let domEmail = document.getElementById("email").value;
-  let domdate = document.getElementById("date").value;
+  let domDate = document.getElementById("date").value;
   let domPass = document.getElementById("password").value;
 
-  /*   let prueba = { name: "joaco", id: "5" };
-
-  ////
-  $("#registrarse").click(function () {
-    console.log(prueba);
-    $.post(url, prueba, function (data) {
-      console.log(prueba);
-    });
-  });
- */
   ////Test de verificacion de datos
   let testName =
     domName == null || domName.length == 0 || /^\s+$/.test(domName);
-  console.log(testName);
-  console.log(domName);
+
   if (testName == true) {
-    let mensaje = document.getElementById("mensaje");
-    let parrafo = document.createElement("h1");
-    parrafo.innerHTML = `NO INGRESO USUARIO`;
-    parrafo.style.color = "white";
-    parrafo.style.fontSize = "30px";
-    mensaje.appendChild(parrafo);
+    errorNote(mensajeError, errorName);
+    errorName = "";
     return;
   } else {
-    console.log("entro nombre");
-    /* let lista = document.getElementById("mensaje");
-    lista.removeChild(lista.lastChild); */
+    document.getElementById("mensaje").innerHTML = "";
   }
-  console.log("Paso if de name");
+
   let testEmail =
     /^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/.test(
       domEmail
     );
-  console.log(testEmail);
+
   if (testEmail == true) {
     console.log("entro email");
-    /* let lista = document.getElementById("mensaje");
-    lista.removeChild(lista.lastChild); */
   } else {
-    let mensaje = document.getElementById("mensaje");
-    let parrafo = document.createElement("h1");
-    parrafo.innerHTML = `NO INGRESO EMAIL`;
-    parrafo.style.color = "white";
-    parrafo.style.fontSize = "30px";
-    mensaje.appendChild(parrafo);
+    errorNote(mensajeError, errorEmail);
     return;
   }
-  console.log("Paso por if de email");
+
   let testPass =
     domPass == null || domPass.length == 0 || /^\s+$/.test(domPass);
-  console.log(testPass);
+
   if (testPass == true) {
-    let mensaje = document.getElementById("mensaje");
-    let parrafo = document.createElement("h1");
-    parrafo.innerHTML = `NO INGRESO PASSWORD`;
-    parrafo.style.color = "white";
-    parrafo.style.fontSize = "30px";
-    mensaje.appendChild(parrafo);
+    errorNote(mensajeError, errorPass);
     return;
   } else {
     console.log("entro password");
-    /*let lista = document.getElementById("mensaje");
-    lista.removeChild(lista.lastChild);*/
+  }
+
+  //VERIFICO SI EL EMAIL ESTA REPETIDO
+  let emailExistente = allUser.find((item) => item.email == email.value);
+
+  if (emailExistente != undefined) {
+    errorNote(mensajeError, existeEmail);
+    existeEmail = "";
+    document.getElementById("bienvenida").innerHTML = "";
+    return;
   }
 
   //TEXTO DE CARGA DE USUARIO
   let mensaje = document.getElementById("bienvenida");
   let parrafo = document.createElement("h1");
   parrafo.innerHTML = `Bienvenido ${domName}`;
-  parrafo.style.color = "blue";
-  parrafo.style.fontSize = "30px";
+  parrafo.style.color = "white";
+  parrafo.style.fontSize = "35px";
   mensaje.appendChild(parrafo);
 
   //CARGAR DEL USUARIO A LISTA
-  console.log(user);
+
   allUser.push(user);
+
+  //Transformo usuarios para almacernar en sessionStorage
+  let usersJson = JSON.stringify(allUser);
+  sessionStorage.setItem("USERS", usersJson);
+  let usuario = sessionStorage.getItem("USERS");
+  let parseUsuario = JSON.parse(usuario);
+  console.log(parseUsuario);
 
   //Envio de usuario cargado a jsonplaceholder
   let url = "https://jsonplaceholder.typicode.com/posts";
   let infoEnviada = user;
-
   $.ajax({
     method: "POST",
     url: url,
@@ -109,20 +94,23 @@ function altaUsuarios() {
 
   sessionStorage.setItem("Nombre", nameDom.value);
   sessionStorage.setItem("Email", emailDom.value);
+  sessionStorage.setItem("Password", passwordDom.value);
+  sessionStorage.setItem("FechaDeNacimiento", dateDom.value);
+
+  //Vaciar Campos al crear Usuario
   document.getElementById("name").value = "";
   document.getElementById("email").value = "";
   document.getElementById("date").value = "";
   document.getElementById("password").value = "";
 }
 
-//Muestra usuario y email del ultimo cargado
-function nuevoUsuario() {
-  console.log(allUser);
-  let nombre = sessionStorage.getItem("Nombre");
-  let correo = sessionStorage.getItem("Email");
-  let sessionUser = new users(nombre, correo);
-  NameAndEmail.push(sessionUser);
-  console.log(NameAndEmail);
+//Mensaje de error de carga de campo
+function errorNote(mensaje, msj) {
+  let parrafo = document.createElement("h2");
+  parrafo.innerHTML = msj;
+  parrafo.style.color = "rgb(210, 217, 221)";
+  parrafo.style.fontSize = "20px";
+  mensaje.appendChild(parrafo);
 }
 
 //Objeto constructor
@@ -142,11 +130,16 @@ class users {
     this.email_sS = email_sS;
   }
 }
+
 //Array vacio
 let allUser = [];
-let NameAndEmail = [];
 
+//Variables
 let botonRegistrase = document.getElementById("registrarse");
-let botonNuevoUsuario = document.getElementById("nuevoUsuario");
 botonRegistrase.addEventListener("click", altaUsuarios);
-botonNuevoUsuario.addEventListener("click", nuevoUsuario);
+
+let existeEmail = "Ya hay usuario con este email";
+let errorName = "No ingreso nombre";
+let errorEmail = "No ingreso email";
+let errorPass = "No ingreso contraseña";
+let mensajeError = document.getElementById("mensaje");

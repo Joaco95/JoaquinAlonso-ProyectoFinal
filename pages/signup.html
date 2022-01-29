@@ -25,15 +25,15 @@
     ></script>
     <link rel="stylesheet" href="../css/style.css" />
   </head>
-  <body class="gradient-custom">
-    <section class="vh-100 gradient-custom">
+  <body class="gradient-custom" id="colorBody">
+    <section class="vh-100">
       <div class="container py-5 h-100">
         <div class="row d-flex justify-content-center align-items-center h-100">
           <div class="col-12 col-md-8 col-lg-6 col-xl-5">
             <div class="card bg-dark text-white" style="border-radius: 1rem">
               <div class="card-body p-5 text-center">
                 <div class="mb-md-5 mt-md-4 pb-5">
-                  <h2 class="fw-bold mb-5 text-uppercase">Alta de usuario</h2>
+                  <h2 class="fw-bold mb-5 text-uppercase">Registrarse</h2>
 
                   <div class="form-outline form-white mb-4">
                     <input
@@ -62,7 +62,7 @@
                       id="date"
                       class="form-control form-control-lg"
                       min="1950-01-01"
-                      max="2010-12-31"
+                      max="2004-12-31"
                     />
                     <label class="form-label" for="typeEmailX"
                       >Fecha de nacimiento</label
@@ -81,7 +81,7 @@
                   </div>
 
                   <button
-                    class="btn btn-outline-light btn-lg px-5"
+                    class="btn btn-outline-light btn-lg px-5 col-12"
                     type="submit"
                     id="registrarse"
                   >
@@ -89,32 +89,13 @@
                   </button>
 
                   <button
-                    class="btn btn-outline-light btn-lg px-5 mt-5"
-                    type="submit"
-                    id="nuevoUsuario"
-                  >
-                    Nuevo Usuario
-                  </button>
-                  <div class="g-signin2" data-onsuccess="onSignIn"></div>
-
-                  <button
-                    class="btn btn-outline-light btn-lg px-5 mt-5"
+                    class="btn btn-outline-light btn-lg px-5 mt-5 col-12"
                     type="submit"
                   >
                     <a href="../index.html">Volver</a>
                   </button>
                   <div class="text-center m-5" id="mensaje"></div>
                   <div class="text-center m-5" id="bienvenida"></div>
-                  <div
-                    class="d-flex justify-content-center text-center mt-4 pt-1"
-                  >
-                    <a href="../img/facebook.png" class="text-white"
-                      ><i class="fab fa-facebook-f fa-lg"></i
-                    ></a>
-                    <a href="../img/google.jpg" class="text-white"
-                      ><i class="fab fa-google fa-lg"></i
-                    ></a>
-                  </div>
                 </div>
               </div>
             </div>
@@ -122,7 +103,6 @@
         </div>
       </div>
     </section>
-
     <script src="../javascript/signup.js"></script>
   </body>
 </html>
